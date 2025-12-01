@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Phone, Mail, MapPin, ChevronDown, ChevronRight, Search } from 'lucide-react';
+import { Menu, X, Phone, Mail, MapPin, ChevronDown, ChevronRight, Search, Book, GraduationCap, School, HeartHandshake } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const Header: React.FC = () => {
@@ -36,6 +36,33 @@ const Header: React.FC = () => {
     }
   };
 
+  const programsData = [
+    { 
+      name: 'S1 Teologi (S.Th)', 
+      path: '/prodi/s1-teologi',
+      desc: 'Membentuk teolog kontekstual dan biblikal.',
+      icon: <Book className="text-brand-blue" />
+    },
+    { 
+      name: 'S1 PAK (S.Pd)', 
+      path: '/prodi/s1-pak',
+      desc: 'Menghasilkan pendidik Kristen profesional.',
+      icon: <HeartHandshake className="text-orange-500" />
+    },
+    { 
+      name: 'S2 Magister Teologi', 
+      path: '/prodi/s2-teologi',
+      desc: 'Pendalaman teologi untuk pemimpin gereja.',
+      icon: <GraduationCap className="text-green-600" />
+    },
+    { 
+      name: 'S2 Magister PAK', 
+      path: '/prodi/s2-pak',
+      desc: 'Pengembangan kepemimpinan pendidikan Kristen.',
+      icon: <School className="text-purple-600" />
+    },
+  ];
+
   const navigation = [
     { name: 'Beranda', path: '/' },
     {
@@ -43,9 +70,8 @@ const Header: React.FC = () => {
       path: '#',
       dropdown: [
         { name: 'Sejarah', path: '/profil/sejarah' },
-        { name: 'Visi', path: '/profil/visi' },
-        { name: 'Misi', path: '/profil/misi' },
-        { name: 'Nilai', path: '/profil/nilai' },
+        { name: 'Visi & Misi', path: '/profil/visi' },
+        { name: 'Nilai Dasar', path: '/profil/nilai' },
         { name: 'Akreditasi', path: '/profil/akreditasi' },
         { name: 'Struktur Organisasi', path: '/profil/struktur' },
         { name: 'Galeri Multimedia', path: '/profil/galeri' },
@@ -54,13 +80,8 @@ const Header: React.FC = () => {
     {
       name: 'Program Studi',
       path: '#',
-      dropdown: [
-        { name: 'S1 Teologi (S.Th)', path: '/prodi/s1-teologi' },
-        { name: 'S1 Pendidikan Agama Kristen (S.Pd)', path: '/prodi/s1-pak' },
-        { name: 'S2 Magister Teologi (M.Th)', path: '/prodi/s2-teologi' },
-        { name: 'S2 Magister PAK (M.Pd)', path: '/prodi/s2-pak' },
-        { name: 'Fasilitas Akademik', path: '/prodi/fasilitas' },
-      ]
+      type: 'mega', // Identifier for Mega Menu
+      dropdown: programsData // Uses enhanced data structure
     },
     {
       name: 'Dosen',
@@ -96,6 +117,7 @@ const Header: React.FC = () => {
       path: '#',
       dropdown: [
         { name: 'Berita Terkini', path: '/berita/terkini' },
+        { name: 'Agenda Kampus', path: '/berita/agenda' },
         { name: 'Artikel', path: '/berita/artikel' },
         { name: 'Informasi', path: '/berita/informasi' },
       ]
@@ -150,7 +172,7 @@ const Header: React.FC = () => {
           {/* Desktop Nav */}
           <nav className="hidden xl:flex items-center space-x-6">
             {navigation.map((item) => (
-              <div key={item.name} className="relative group">
+              <div key={item.name} className="relative group h-full flex items-center">
                 <Link
                   to={item.path}
                   className={`flex items-center font-bold text-sm uppercase tracking-wide transition-colors py-2 ${
@@ -163,22 +185,49 @@ const Header: React.FC = () => {
                   {item.dropdown && <ChevronDown size={14} className="ml-1 mt-0.5" />}
                 </Link>
 
-                {/* Dropdown Menu */}
+                {/* Dropdown Menu Logic */}
                 {item.dropdown && (
-                  <div className="absolute top-full left-0 w-64 bg-white shadow-xl rounded-b-lg border-t-4 border-brand-gold opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-2 group-hover:translate-y-0 z-50">
-                    <ul className="py-2">
-                      {item.dropdown.map((subItem) => (
-                        <li key={subItem.name}>
+                  item.type === 'mega' ? (
+                    // Mega Menu
+                    <div className="absolute top-full -left-20 w-[600px] bg-white shadow-xl rounded-xl border-t-4 border-brand-gold opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-2 group-hover:translate-y-0 z-50 p-6">
+                      <div className="grid grid-cols-2 gap-4">
+                        {item.dropdown.map((subItem: any) => (
                           <Link 
+                            key={subItem.name} 
                             to={subItem.path}
-                            className="block px-4 py-2 text-sm text-gray-600 hover:text-brand-blue hover:bg-gray-50 transition-colors border-b border-gray-50 last:border-0"
+                            className="flex items-start p-3 rounded-lg hover:bg-gray-50 transition-colors group/item"
                           >
-                            {subItem.name}
+                            <div className="p-2 bg-brand-blue/10 rounded-lg mr-4 group-hover/item:bg-brand-blue/20">
+                              {subItem.icon}
+                            </div>
+                            <div>
+                              <h5 className="font-bold text-gray-900 group-hover/item:text-brand-blue">{subItem.name}</h5>
+                              <p className="text-xs text-gray-500 mt-1">{subItem.desc}</p>
+                            </div>
                           </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                        ))}
+                         <Link to="/prodi/fasilitas" className="col-span-2 mt-2 p-3 bg-brand-light/50 rounded-lg text-center text-brand-blue font-bold text-sm hover:bg-brand-light border border-dashed border-brand-blue/30">
+                           Lihat Fasilitas Akademik &rarr;
+                         </Link>
+                      </div>
+                    </div>
+                  ) : (
+                    // Standard Dropdown
+                    <div className="absolute top-full left-0 w-56 bg-white shadow-xl rounded-b-lg border-t-4 border-brand-gold opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-2 group-hover:translate-y-0 z-50">
+                      <ul className="py-2">
+                        {item.dropdown.map((subItem: any) => (
+                          <li key={subItem.name}>
+                            <Link 
+                              to={subItem.path}
+                              className="block px-4 py-2 text-sm text-gray-600 hover:text-brand-blue hover:bg-gray-50 transition-colors border-b border-gray-50 last:border-0"
+                            >
+                              {subItem.name}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )
                 )}
               </div>
             ))}
@@ -262,7 +311,7 @@ const Header: React.FC = () => {
                     </button>
                     {activeMobileSubmenu === item.name && (
                       <div className="bg-gray-50 rounded-lg mb-2 p-2 pl-4">
-                        {item.dropdown.map((subItem) => (
+                        {item.dropdown.map((subItem: any) => (
                           <Link
                             key={subItem.name}
                             to={subItem.path}
