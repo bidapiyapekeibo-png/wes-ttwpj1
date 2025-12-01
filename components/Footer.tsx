@@ -33,7 +33,7 @@ const Footer: React.FC = () => {
           {/* Quick Links */}
           <div>
             <h4 className="text-white font-bold text-lg mb-6 relative inline-block">
-              Profil
+              Tautan Cepat
               <span className="absolute bottom-0 left-0 w-1/2 h-0.5 bg-brand-gold"></span>
             </h4>
             <ul className="space-y-3 text-sm">
@@ -41,6 +41,8 @@ const Footer: React.FC = () => {
               <li><Link to="/profil/visi" className="hover:text-brand-gold transition-colors">Visi & Misi</Link></li>
               <li><Link to="/profil/akreditasi" className="hover:text-brand-gold transition-colors">Akreditasi</Link></li>
               <li><Link to="/profil/struktur" className="hover:text-brand-gold transition-colors">Struktur Organisasi</Link></li>
+              <li><Link to="/mahasiswa/ormawa" className="hover:text-brand-gold transition-colors">Organisasi Mahasiswa</Link></li>
+              <li><Link to="/mahasiswa/kegiatan" className="hover:text-brand-gold transition-colors">Kegiatan Mahasiswa</Link></li>
             </ul>
           </div>
 
