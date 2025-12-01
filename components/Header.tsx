@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Phone, Mail, MapPin, ChevronDown, ChevronRight } from 'lucide-react';
-import { Link, useLocation } from 'react-router-dom';
+import { Menu, X, Phone, Mail, MapPin, ChevronDown, ChevronRight, Search } from 'lucide-react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeMobileSubmenu, setActiveMobileSubmenu] = useState<string | null>(null);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -20,7 +24,17 @@ const Header: React.FC = () => {
   useEffect(() => {
     setIsMobileMenuOpen(false);
     setActiveMobileSubmenu(null);
+    setIsSearchOpen(false);
   }, [location]);
+
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      navigate(`/search?q=${encodeURIComponent(searchQuery)}`);
+      setIsSearchOpen(false);
+      setSearchQuery('');
+    }
+  };
 
   const navigation = [
     { name: 'Beranda', path: '/' },
@@ -170,8 +184,38 @@ const Header: React.FC = () => {
             ))}
           </nav>
 
-          {/* CTA Button */}
-          <div className="hidden xl:block">
+          {/* Right Side Actions */}
+          <div className="hidden xl:flex items-center space-x-3">
+             {/* Search Toggle */}
+             <div className="relative">
+                <button 
+                  onClick={() => setIsSearchOpen(!isSearchOpen)}
+                  className="p-2 text-gray-600 hover:text-brand-blue transition-colors rounded-full hover:bg-gray-100"
+                >
+                  {isSearchOpen ? <X size={20} /> : <Search size={20} />}
+                </button>
+                
+                {/* Search Input Dropdown */}
+                {isSearchOpen && (
+                  <div className="absolute right-0 top-full mt-2 w-72 bg-white shadow-lg rounded-lg p-3 border border-gray-200 animate-in fade-in slide-in-from-top-2">
+                    <form onSubmit={handleSearchSubmit} className="relative">
+                      <input 
+                        type="text" 
+                        placeholder="Cari di website..."
+                        className="w-full pl-4 pr-10 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue text-sm"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        autoFocus
+                      />
+                      <button type="submit" className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-brand-blue">
+                        <Search size={16} />
+                      </button>
+                    </form>
+                  </div>
+                )}
+             </div>
+
+            {/* CTA Button */}
             <Link to="/layanan/pmb" className="bg-brand-gold hover:bg-amber-600 text-white px-5 py-2 rounded font-bold text-sm transition-all shadow-md">
               Daftar Sekarang
             </Link>
@@ -191,6 +235,20 @@ const Header: React.FC = () => {
       {isMobileMenuOpen && (
         <div className="xl:hidden bg-white border-t border-gray-100 shadow-xl fixed inset-0 top-[70px] z-40 overflow-y-auto pb-20">
           <div className="container mx-auto px-4 py-4 flex flex-col space-y-1">
+            {/* Mobile Search */}
+            <form onSubmit={handleSearchSubmit} className="mb-4 relative">
+              <input 
+                type="text" 
+                placeholder="Cari..." 
+                className="w-full p-3 pl-4 pr-10 border border-gray-200 rounded-lg bg-gray-50 focus:bg-white focus:border-brand-blue outline-none"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+              <button type="submit" className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">
+                <Search size={20} />
+              </button>
+            </form>
+
             {navigation.map((item) => (
               <div key={item.name} className="border-b border-gray-50 last:border-0">
                 {item.dropdown ? (
