@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Phone, Mail, MapPin, ChevronDown, ChevronRight, Search, Book, GraduationCap, School, HeartHandshake } from 'lucide-react';
+import { Menu, X, Phone, Mail, MapPin, ChevronDown, ChevronRight, Search, Book, GraduationCap, School, HeartHandshake, Moon, Sun } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const Header: React.FC = () => {
@@ -8,6 +8,7 @@ const Header: React.FC = () => {
   const [activeMobileSubmenu, setActiveMobileSubmenu] = useState<string | null>(null);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [isDarkMode, setIsDarkMode] = useState(false);
   
   const location = useLocation();
   const navigate = useNavigate();
@@ -19,6 +20,17 @@ const Header: React.FC = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Handle Dark Mode
+  useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [isDarkMode]);
+
+  const toggleTheme = () => setIsDarkMode(!isDarkMode);
 
   // Close mobile menu when route changes
   useEffect(() => {
@@ -79,9 +91,9 @@ const Header: React.FC = () => {
     },
     {
       name: 'Program Studi',
-      path: '#',
-      type: 'mega', // Identifier for Mega Menu
-      dropdown: programsData // Uses enhanced data structure
+      path: '/prodi', // Updated to point to the overview page
+      type: 'mega', 
+      dropdown: programsData 
     },
     {
       name: 'Dosen',
@@ -136,7 +148,7 @@ const Header: React.FC = () => {
   return (
     <header className="w-full z-50 fixed top-0 left-0 transition-all duration-300 font-sans">
       {/* Top Bar - Hidden on mobile */}
-      <div className="bg-brand-blue text-white py-2 hidden lg:block">
+      <div className="bg-brand-blue dark:bg-gray-900 text-white py-2 hidden lg:block transition-colors duration-300">
         <div className="container mx-auto px-4 flex justify-between items-center text-xs tracking-wide">
           <div className="flex items-center space-x-6">
             <div className="flex items-center space-x-2">
@@ -148,15 +160,17 @@ const Header: React.FC = () => {
               <span>info@sttwpj.ac.id</span>
             </div>
           </div>
-          <div className="flex items-center space-x-2">
-            <MapPin size={14} className="text-brand-gold" />
-            <span>Sentani, Jayapura, Papua</span>
+          <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-2">
+              <MapPin size={14} className="text-brand-gold" />
+              <span>Sentani, Jayapura, Papua</span>
+            </div>
           </div>
         </div>
       </div>
 
       {/* Main Navbar */}
-      <div className={`w-full transition-all duration-300 border-b border-gray-100 ${isScrolled ? 'bg-white shadow-md py-2' : 'bg-white py-4'}`}>
+      <div className={`w-full transition-all duration-300 border-b border-gray-100 dark:border-gray-800 ${isScrolled ? 'bg-white dark:bg-gray-900 shadow-md py-2' : 'bg-white dark:bg-gray-900 py-4'}`}>
         <div className="container mx-auto px-4 flex justify-between items-center">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-3 group shrink-0">
@@ -164,8 +178,8 @@ const Header: React.FC = () => {
               W
             </div>
             <div className="flex flex-col">
-              <span className="font-bold text-gray-900 text-lg leading-tight group-hover:text-brand-blue transition-colors">STT Walter Post</span>
-              <span className="text-xs text-gray-500 font-medium tracking-wider">JAYAPURA PAPUA</span>
+              <span className="font-bold text-gray-900 dark:text-white text-lg leading-tight group-hover:text-brand-blue dark:group-hover:text-brand-gold transition-colors">STT Walter Post</span>
+              <span className="text-xs text-gray-500 dark:text-gray-400 font-medium tracking-wider">JAYAPURA PAPUA</span>
             </div>
           </Link>
 
@@ -177,8 +191,8 @@ const Header: React.FC = () => {
                   to={item.path}
                   className={`flex items-center font-bold text-sm uppercase tracking-wide transition-colors py-2 ${
                     location.pathname.startsWith(item.path) && item.path !== '/' 
-                      ? 'text-brand-blue' 
-                      : 'text-gray-700 hover:text-brand-blue'
+                      ? 'text-brand-blue dark:text-brand-gold' 
+                      : 'text-gray-700 dark:text-gray-300 hover:text-brand-blue dark:hover:text-brand-gold'
                   }`}
                 >
                   {item.name}
@@ -189,37 +203,37 @@ const Header: React.FC = () => {
                 {item.dropdown && (
                   item.type === 'mega' ? (
                     // Mega Menu
-                    <div className="absolute top-full -left-20 w-[600px] bg-white shadow-xl rounded-xl border-t-4 border-brand-gold opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-2 group-hover:translate-y-0 z-50 p-6">
+                    <div className="absolute top-full -left-20 w-[600px] bg-white dark:bg-gray-800 shadow-xl rounded-xl border-t-4 border-brand-gold opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-2 group-hover:translate-y-0 z-50 p-6">
                       <div className="grid grid-cols-2 gap-4">
                         {item.dropdown.map((subItem: any) => (
                           <Link 
                             key={subItem.name} 
                             to={subItem.path}
-                            className="flex items-start p-3 rounded-lg hover:bg-gray-50 transition-colors group/item"
+                            className="flex items-start p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors group/item"
                           >
-                            <div className="p-2 bg-brand-blue/10 rounded-lg mr-4 group-hover/item:bg-brand-blue/20">
+                            <div className="p-2 bg-brand-blue/10 dark:bg-gray-700 rounded-lg mr-4 group-hover/item:bg-brand-blue/20">
                               {subItem.icon}
                             </div>
                             <div>
-                              <h5 className="font-bold text-gray-900 group-hover/item:text-brand-blue">{subItem.name}</h5>
-                              <p className="text-xs text-gray-500 mt-1">{subItem.desc}</p>
+                              <h5 className="font-bold text-gray-900 dark:text-white group-hover/item:text-brand-blue dark:group-hover/item:text-brand-gold">{subItem.name}</h5>
+                              <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{subItem.desc}</p>
                             </div>
                           </Link>
                         ))}
-                         <Link to="/prodi/fasilitas" className="col-span-2 mt-2 p-3 bg-brand-light/50 rounded-lg text-center text-brand-blue font-bold text-sm hover:bg-brand-light border border-dashed border-brand-blue/30">
+                         <Link to="/prodi/fasilitas" className="col-span-2 mt-2 p-3 bg-brand-light/50 dark:bg-gray-700/50 rounded-lg text-center text-brand-blue dark:text-brand-gold font-bold text-sm hover:bg-brand-light dark:hover:bg-gray-700 border border-dashed border-brand-blue/30 dark:border-gray-600">
                            Lihat Fasilitas Akademik &rarr;
                          </Link>
                       </div>
                     </div>
                   ) : (
                     // Standard Dropdown
-                    <div className="absolute top-full left-0 w-56 bg-white shadow-xl rounded-b-lg border-t-4 border-brand-gold opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-2 group-hover:translate-y-0 z-50">
+                    <div className="absolute top-full left-0 w-56 bg-white dark:bg-gray-800 shadow-xl rounded-b-lg border-t-4 border-brand-gold opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-2 group-hover:translate-y-0 z-50">
                       <ul className="py-2">
                         {item.dropdown.map((subItem: any) => (
                           <li key={subItem.name}>
                             <Link 
                               to={subItem.path}
-                              className="block px-4 py-2 text-sm text-gray-600 hover:text-brand-blue hover:bg-gray-50 transition-colors border-b border-gray-50 last:border-0"
+                              className="block px-4 py-2 text-sm text-gray-600 dark:text-gray-300 hover:text-brand-blue dark:hover:text-brand-gold hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors border-b border-gray-50 dark:border-gray-700 last:border-0"
                             >
                               {subItem.name}
                             </Link>
@@ -235,28 +249,37 @@ const Header: React.FC = () => {
 
           {/* Right Side Actions */}
           <div className="hidden xl:flex items-center space-x-3">
+             {/* Dark Mode Toggle */}
+             <button
+               onClick={toggleTheme}
+               className="p-2 text-gray-600 dark:text-gray-300 hover:text-brand-blue dark:hover:text-brand-gold transition-colors rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
+               title={isDarkMode ? "Mode Terang" : "Mode Gelap"}
+             >
+               {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
+             </button>
+
              {/* Search Toggle */}
              <div className="relative">
                 <button 
                   onClick={() => setIsSearchOpen(!isSearchOpen)}
-                  className="p-2 text-gray-600 hover:text-brand-blue transition-colors rounded-full hover:bg-gray-100"
+                  className="p-2 text-gray-600 dark:text-gray-300 hover:text-brand-blue dark:hover:text-brand-gold transition-colors rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
                 >
                   {isSearchOpen ? <X size={20} /> : <Search size={20} />}
                 </button>
                 
                 {/* Search Input Dropdown */}
                 {isSearchOpen && (
-                  <div className="absolute right-0 top-full mt-2 w-72 bg-white shadow-lg rounded-lg p-3 border border-gray-200 animate-in fade-in slide-in-from-top-2">
+                  <div className="absolute right-0 top-full mt-2 w-72 bg-white dark:bg-gray-800 shadow-lg rounded-lg p-3 border border-gray-200 dark:border-gray-700 animate-in fade-in slide-in-from-top-2">
                     <form onSubmit={handleSearchSubmit} className="relative">
                       <input 
                         type="text" 
                         placeholder="Cari di website..."
-                        className="w-full pl-4 pr-10 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue text-sm"
+                        className="w-full pl-4 pr-10 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:border-brand-blue dark:focus:border-brand-gold focus:ring-1 focus:ring-brand-blue dark:focus:ring-brand-gold text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                         autoFocus
                       />
-                      <button type="submit" className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-brand-blue">
+                      <button type="submit" className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500 hover:text-brand-blue dark:hover:text-brand-gold">
                         <Search size={16} />
                       </button>
                     </form>
@@ -272,7 +295,7 @@ const Header: React.FC = () => {
 
           {/* Mobile Menu Button */}
           <button 
-            className="xl:hidden text-gray-700 hover:text-brand-blue"
+            className="xl:hidden text-gray-700 dark:text-white hover:text-brand-blue"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
             {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
@@ -282,40 +305,50 @@ const Header: React.FC = () => {
 
       {/* Mobile Menu Dropdown */}
       {isMobileMenuOpen && (
-        <div className="xl:hidden bg-white border-t border-gray-100 shadow-xl fixed inset-0 top-[70px] z-40 overflow-y-auto pb-20">
+        <div className="xl:hidden bg-white dark:bg-gray-900 border-t border-gray-100 dark:border-gray-800 shadow-xl fixed inset-0 top-[70px] z-40 overflow-y-auto pb-20">
           <div className="container mx-auto px-4 py-4 flex flex-col space-y-1">
+             <div className="flex justify-end mb-4">
+                <button
+                 onClick={toggleTheme}
+                 className="flex items-center space-x-2 text-gray-600 dark:text-gray-300"
+               >
+                 {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
+                 <span>{isDarkMode ? "Mode Terang" : "Mode Gelap"}</span>
+               </button>
+             </div>
+
             {/* Mobile Search */}
             <form onSubmit={handleSearchSubmit} className="mb-4 relative">
               <input 
                 type="text" 
                 placeholder="Cari..." 
-                className="w-full p-3 pl-4 pr-10 border border-gray-200 rounded-lg bg-gray-50 focus:bg-white focus:border-brand-blue outline-none"
+                className="w-full p-3 pl-4 pr-10 border border-gray-200 dark:border-gray-700 rounded-lg bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white focus:bg-white dark:focus:bg-gray-700 focus:border-brand-blue outline-none"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
-              <button type="submit" className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">
+              <button type="submit" className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400">
                 <Search size={20} />
               </button>
             </form>
 
             {navigation.map((item) => (
-              <div key={item.name} className="border-b border-gray-50 last:border-0">
+              <div key={item.name} className="border-b border-gray-50 dark:border-gray-800 last:border-0">
                 {item.dropdown ? (
                   <div>
                     <button 
                       onClick={() => toggleMobileSubmenu(item.name)}
-                      className="w-full flex justify-between items-center py-3 text-gray-800 font-bold hover:text-brand-blue text-left"
+                      className="w-full flex justify-between items-center py-3 text-gray-800 dark:text-white font-bold hover:text-brand-blue text-left"
                     >
                       {item.name}
                       {activeMobileSubmenu === item.name ? <ChevronDown size={18} /> : <ChevronRight size={18} />}
                     </button>
                     {activeMobileSubmenu === item.name && (
-                      <div className="bg-gray-50 rounded-lg mb-2 p-2 pl-4">
+                      <div className="bg-gray-50 dark:bg-gray-800 rounded-lg mb-2 p-2 pl-4">
                         {item.dropdown.map((subItem: any) => (
                           <Link
                             key={subItem.name}
                             to={subItem.path}
-                            className="block py-2 text-sm text-gray-600 hover:text-brand-blue"
+                            className="block py-2 text-sm text-gray-600 dark:text-gray-300 hover:text-brand-blue dark:hover:text-brand-gold"
                           >
                             {subItem.name}
                           </Link>
@@ -326,7 +359,7 @@ const Header: React.FC = () => {
                 ) : (
                   <Link
                     to={item.path}
-                    className="block py-3 text-gray-800 font-bold hover:text-brand-blue"
+                    className="block py-3 text-gray-800 dark:text-white font-bold hover:text-brand-blue"
                   >
                     {item.name}
                   </Link>
