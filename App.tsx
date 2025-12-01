@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { HashRouter as Router, Routes, Route, useLocation, Link, useNavigate, useSearchParams } from 'react-router-dom';
-import { BookOpen, CheckCircle, Users, Image as ImageIcon, Calendar, Award, Download, ArrowRight, User, MapPin, Phone, Mail, ChevronDown, ChevronRight, X, ZoomIn, Search, Library, ExternalLink, Filter, FileText, CreditCard, PenTool, Dumbbell, Church, Clock, Video, GraduationCap, Printer, Bookmark, ArrowUp, ArrowDown, Bell, Send, Globe, LogIn, Lock, School, HeartHandshake } from 'lucide-react';
+import { HashRouter as Router, Routes, Route, useLocation, Link, useSearchParams } from 'react-router-dom';
+import { BookOpen, CheckCircle, Users, Image as ImageIcon, Calendar, Award, Download, ArrowRight, User, MapPin, Phone, Mail, ChevronDown, ChevronRight, X, ZoomIn, Search, Library, ExternalLink, Filter, FileText, CreditCard, PenTool, Dumbbell, Church, Clock, Video, GraduationCap, Printer, Bookmark, ArrowUp, ArrowDown, Bell, Send, Globe, LogIn, Lock, School, HeartHandshake, Mic, Coffee } from 'lucide-react';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import Features from './components/Features';
@@ -30,7 +30,7 @@ interface PageLayoutProps {
 const PageLayout: React.FC<PageLayoutProps> = ({ title, parent, parentPath, children }) => (
   <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
     <PageHeader title={title} parent={parent} parentPath={parentPath} />
-    <div className="container mx-auto px-4 py-16">
+    <div className="container mx-auto px-4 lg:px-32 py-16">
       <div className="flex flex-col lg:flex-row gap-12">
         {/* Main Content Area */}
         <div className="lg:w-3/4">
@@ -129,10 +129,8 @@ const InfoPopup = ({ onClose }: { onClose: () => void }) => {
   );
 };
 
-
 // --- Content Components ---
 
-// NEW: Informasi Page (Template for the Popup content)
 const InformasiPage: React.FC = () => (
   <PageLayout title="Informasi & Pengumuman" parent="Berita">
      <div className="space-y-6">
@@ -155,13 +153,12 @@ const InformasiPage: React.FC = () => (
   </PageLayout>
 );
 
-// NEW: Program Studi Overview
 const ProdiIndexPage: React.FC = () => {
   const programs = [
-    { title: "S1 Teologi (S.Th)", link: "/prodi/s1-teologi", icon: <BookOpen size={40}/>, color: "text-brand-blue", bg: "bg-blue-50 dark:bg-blue-900/20", desc: "Membentuk teolog kontekstual dan biblikal." },
-    { title: "S1 Pendidikan Agama Kristen", link: "/prodi/s1-pak", icon: <HeartHandshake size={40}/>, color: "text-orange-500", bg: "bg-orange-50 dark:bg-orange-900/20", desc: "Menghasilkan pendidik Kristen profesional." },
-    { title: "S2 Magister Teologi", link: "/prodi/s2-teologi", icon: <GraduationCap size={40}/>, color: "text-green-600", bg: "bg-green-50 dark:bg-green-900/20", desc: "Pendalaman teologi untuk pemimpin gereja." },
-    { title: "S2 Magister PAK", link: "/prodi/s2-pak", icon: <School size={40}/>, color: "text-purple-600", bg: "bg-purple-50 dark:bg-purple-900/20", desc: "Pengembangan kepemimpinan pendidikan Kristen." }
+    { title: "S1 Teologi (S.Th)", link: "/prodi/s1-teologi", icon: <BookOpen size={40}/>, color: "text-brand-blue dark:text-brand-gold", bg: "bg-blue-50 dark:bg-blue-900/30", border: "hover:border-brand-blue", desc: "Membentuk teolog kontekstual dan biblikal." },
+    { title: "S1 Pendidikan Agama Kristen", link: "/prodi/s1-pak", icon: <HeartHandshake size={40}/>, color: "text-orange-500 dark:text-orange-400", bg: "bg-orange-50 dark:bg-orange-900/30", border: "hover:border-orange-500", desc: "Menghasilkan pendidik Kristen profesional." },
+    { title: "S2 Magister Teologi", link: "/prodi/s2-teologi", icon: <GraduationCap size={40}/>, color: "text-green-600 dark:text-green-400", bg: "bg-green-50 dark:bg-green-900/30", border: "hover:border-green-600", desc: "Pendalaman teologi untuk pemimpin gereja." },
+    { title: "S2 Magister PAK", link: "/prodi/s2-pak", icon: <School size={40}/>, color: "text-purple-600 dark:text-purple-400", bg: "bg-purple-50 dark:bg-purple-900/30", border: "hover:border-purple-600", desc: "Pengembangan kepemimpinan pendidikan Kristen." }
   ];
 
   return (
@@ -171,15 +168,15 @@ const ProdiIndexPage: React.FC = () => {
             STT Walter Post Jayapura menyelenggarakan pendidikan tinggi teologi berkualitas dengan berbagai jenjang program studi yang terakreditasi.
           </p>
        </div>
-       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {programs.map((p, i) => (
-             <div key={i} className="border border-gray-200 dark:border-gray-700 rounded-xl p-8 hover:shadow-lg transition-all group bg-white dark:bg-gray-800">
-                <div className={`w-20 h-20 ${p.bg} ${p.color} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}>
+             <div key={i} className={`border border-gray-200 dark:border-gray-700 rounded-2xl p-8 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 group bg-white dark:bg-gray-800 ${p.border}`}>
+                <div className={`w-20 h-20 ${p.bg} ${p.color} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-inner`}>
                    {p.icon}
                 </div>
-                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">{p.title}</h3>
-                <p className="text-gray-600 dark:text-gray-400 mb-6">{p.desc}</p>
-                <Link to={p.link} className="inline-flex items-center text-brand-blue dark:text-brand-gold font-bold hover:underline">
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">{p.title}</h3>
+                <p className="text-gray-600 dark:text-gray-400 mb-8 leading-relaxed">{p.desc}</p>
+                <Link to={p.link} className="inline-flex items-center justify-center w-full py-3 rounded-lg border-2 border-brand-blue dark:border-brand-gold text-brand-blue dark:text-brand-gold font-bold hover:bg-brand-blue dark:hover:bg-brand-gold hover:text-white dark:hover:text-gray-900 transition-all">
                    Lihat Kurikulum & Profil <ArrowRight size={16} className="ml-2" />
                 </Link>
              </div>
@@ -189,7 +186,6 @@ const ProdiIndexPage: React.FC = () => {
   );
 };
 
-// NEW: Contact Page Template
 const ContactPage: React.FC = () => (
   <PageLayout title="Hubungi Kami" parent="Kontak">
     <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
@@ -258,26 +254,22 @@ const ContactPage: React.FC = () => (
   </PageLayout>
 );
 
-// NEW: Staff Kependidikan Template
 const StaffPage: React.FC = () => (
   <PageLayout title="Staf Kependidikan" parent="Dosen">
-     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
        {[
-         { name: "Bpk. Cornelius", role: "Kepala Administrasi Akademik", img: "https://i.pravatar.cc/300?img=60" },
-         { name: "Ibu Deborah", role: "Staf Keuangan", img: "https://i.pravatar.cc/300?img=44" },
-         { name: "Bpk. Simon", role: "Staf Perpustakaan", img: "https://i.pravatar.cc/300?img=13" },
-         { name: "Ibu Rut", role: "Staf Kemahasiswaan", img: "https://i.pravatar.cc/300?img=20" },
-         { name: "Bpk. Thomas", role: "Teknisi IT & Lab", img: "https://i.pravatar.cc/300?img=33" },
-         { name: "Ibu Ester", role: "Resepsionis & Umum", img: "https://i.pravatar.cc/300?img=5" },
+         { name: "Ibu Damaris Adung, S. PAK", role: "Kepala Tata Usaha (TU)", img: "https://ui-avatars.com/api/?name=Damaris+Adung&background=random" },
+         { name: "Ibu Ismiyati, S. PAK", role: "Administrator", img: "https://ui-avatars.com/api/?name=Ismiyati&background=random" },
+         { name: "Pdt. Senior Pekey, S. Th", role: "Operator", img: "https://ui-avatars.com/api/?name=Senior+Pekey&background=random" },
+         { name: "Sdr. Atas Wenda", role: "Kebersihan", img: "https://ui-avatars.com/api/?name=Atas+Wenda&background=random" },
        ].map((staff, i) => (
-         <div key={i} className="flex items-center space-x-4 p-4 border border-gray-100 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-800 shadow-sm hover:shadow-md transition-shadow">
-            <div className="w-16 h-16 rounded-full overflow-hidden bg-gray-200 flex-shrink-0">
+         <div key={i} className="flex items-center space-x-4 p-6 border border-gray-100 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-800 shadow-sm hover:shadow-md transition-shadow">
+            <div className="w-20 h-20 rounded-full overflow-hidden bg-gray-200 flex-shrink-0">
                <img src={staff.img} alt={staff.name} className="w-full h-full object-cover" />
             </div>
             <div>
-               <h4 className="font-bold text-gray-900 dark:text-white">{staff.name}</h4>
-               <p className="text-sm text-brand-blue dark:text-brand-gold">{staff.role}</p>
-               <button className="text-xs text-gray-500 mt-1 hover:text-brand-blue flex items-center"><Mail size={10} className="mr-1"/> Kontak</button>
+               <h4 className="font-bold text-gray-900 dark:text-white text-lg">{staff.name}</h4>
+               <p className="text-brand-blue dark:text-brand-gold font-medium">{staff.role}</p>
             </div>
          </div>
        ))}
@@ -285,7 +277,6 @@ const StaffPage: React.FC = () => (
   </PageLayout>
 );
 
-// NEW: Organisasi Mahasiswa Template
 const OrmawaPage: React.FC = () => (
   <PageLayout title="Organisasi Mahasiswa" parent="Mahasiswa">
      <div className="space-y-12">
@@ -325,7 +316,6 @@ const OrmawaPage: React.FC = () => (
   </PageLayout>
 );
 
-// NEW: Kegiatan Mahasiswa Template
 const KegiatanPage: React.FC = () => (
   <PageLayout title="Kegiatan Mahasiswa" parent="Mahasiswa">
     <div className="space-y-8">
@@ -351,7 +341,6 @@ const KegiatanPage: React.FC = () => (
   </PageLayout>
 );
 
-// NEW: Profil Alumni Template
 const AlumniPage: React.FC = () => (
   <PageLayout title="Profil Alumni" parent="Mahasiswa">
      <div className="text-center mb-10">
@@ -384,7 +373,6 @@ const AlumniPage: React.FC = () => (
   </PageLayout>
 );
 
-// NEW: Digital Services Template (SiAkad, E-Learning)
 const DigitalServicePage: React.FC<{ type: 'SiAkad' | 'E-Learning' }> = ({ type }) => (
   <PageLayout title={type} parent="Layanan">
      <div className="flex flex-col md:flex-row items-center gap-10">
@@ -430,7 +418,6 @@ const DigitalServicePage: React.FC<{ type: 'SiAkad' | 'E-Learning' }> = ({ type 
   </PageLayout>
 );
 
-// NEW: E-Journal Template
 const EJournalPage: React.FC = () => (
   <PageLayout title="E-Journal" parent="Layanan">
      <div className="text-center mb-10">
@@ -463,7 +450,6 @@ const EJournalPage: React.FC = () => (
      </div>
   </PageLayout>
 );
-
 
 const SejarahPage: React.FC = () => (
   <PageLayout title="Sejarah" parent="Profil">
@@ -658,32 +644,30 @@ const OrgNode: React.FC<{ data: OrgNodeData; isRoot?: boolean }> = ({ data, isRo
 
 const StrukturPage: React.FC = () => {
   const orgData: OrgNodeData = {
-    title: "Ketua STT",
-    name: "Dr. Arozatulo Telaumbanua, M.Th",
+    title: "Ketua Sekolah",
+    name: "Pdt. Ardi Asso, S. Th, M. Pd. K",
     children: [
       {
-        title: "Wakil Ketua I (Akademik)",
-        name: "Pdt. Yosua, M.Th",
+        title: "Puket I (Akademik)",
+        name: "Pdt. Daud Auwe, M. Th",
         children: [
           { 
             title: "Kaprodi Teologi", 
-            name: "Pdt. Markus, M.Th",
-            children: [
-              { title: "Sek. Prodi", name: "Staff Teologi" }
-            ]
+            name: "Pdt. Naftali Takimai, M. Th",
           },
           { 
             title: "Kaprodi PAK", 
-            name: "Ibu Maria, M.Pd.K",
-            children: [
-              { title: "Sek. Prodi", name: "Staff PAK" }
-            ]
+            name: "Pdt. Henny Ohoitimur, M. Pd. K",
+          },
+           { 
+            title: "Kepala Perpustakaan", 
+            name: "Pdt. Naftali Takimai, M. Th",
           },
         ]
       },
       {
-        title: "Wakil Ketua II (Keuangan)",
-        name: "Ibu Sarah, S.E",
+        title: "Puket II (Keuangan)",
+        name: "Pdt. Dr. Benny Giay, Ph. D",
         children: [
            { 
              title: "Kepala Keuangan", 
@@ -696,11 +680,11 @@ const StrukturPage: React.FC = () => {
         ]
       },
       {
-        title: "Wakil Ketua III (Kemahasiswaan)",
-        name: "Pdt. Lukas, M.Th",
+        title: "Puket III (Kemahasiswaan)",
+        name: "Pdt. Dominggus Pigay, M. Th",
         children: [
            { title: "Unit Kegiatan Mahasiswa", name: "Koordinator BEM" },
-           { title: "Asrama", name: "Kepala Asrama Putra/i" }
+           { title: "Pengurus Asrama", name: "Pdt. Rosa Pigai, M. Pd. K" }
         ]
       }
     ]
@@ -709,7 +693,7 @@ const StrukturPage: React.FC = () => {
   return (
     <PageLayout title="Struktur Organisasi" parent="Profil">
       <div className="text-center mb-8">
-        <p className="text-gray-600 dark:text-gray-300">Bagan Struktur Organisasi STT Walter Post Jayapura Periode 2022-2026</p>
+        <p className="text-gray-600 dark:text-gray-300">Bagan Struktur Organisasi STT Walter Post Jayapura</p>
         <p className="text-xs text-gray-400 mt-2">(Klik tombol panah untuk melihat detail bawahan)</p>
       </div>
       <div className="overflow-x-auto pb-12 pt-4 px-4 bg-gray-50 dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
@@ -851,78 +835,8 @@ const GaleriPage: React.FC = () => {
   );
 };
 
-// 2. PRODI SECTION
-
-interface ProdiDetailProps {
-  title: string;
-  degree: string;
-  description: string;
-  vision?: string;
-  careers: string[];
-  curriculum: string[];
-  featuredCourses?: string[];
-}
-
-const ProdiDetail: React.FC<ProdiDetailProps> = ({ title, degree, description, vision, careers, curriculum, featuredCourses }) => (
-  <PageLayout title={title} parent="Program Studi">
-    <div className="space-y-10">
-      <div className="bg-brand-blue/5 dark:bg-brand-blue/20 p-8 rounded-2xl border border-brand-blue/10 dark:border-brand-blue/30">
-        <h2 className="text-3xl font-serif font-bold text-brand-blue dark:text-brand-gold mb-4">{title}</h2>
-        <div className="inline-block bg-brand-gold text-white px-4 py-1 rounded-full text-sm font-bold mb-4">{degree}</div>
-        <p className="text-gray-700 dark:text-gray-200 text-lg leading-relaxed">{description}</p>
-      </div>
-
-      {vision && (
-        <div>
-           <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center"><Award className="mr-2 text-brand-gold"/> Visi Program Studi</h3>
-           <p className="text-gray-600 dark:text-gray-300 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm border border-gray-100 dark:border-gray-700 italic">"{vision}"</p>
-        </div>
-      )}
-
-      {featuredCourses && featuredCourses.length > 0 && (
-         <div>
-            <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center"><BookOpen className="mr-2 text-brand-gold"/> Mata Kuliah Unggulan</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {featuredCourses.map((course, idx) => (
-                <div key={idx} className="flex items-center p-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-sm hover:border-brand-blue transition-colors">
-                  <CheckCircle size={16} className="text-brand-blue dark:text-brand-gold mr-3 flex-shrink-0" />
-                  <span className="text-gray-700 dark:text-gray-200 font-medium">{course}</span>
-                </div>
-              ))}
-            </div>
-         </div>
-      )}
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div>
-          <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center"><Users className="mr-2 text-brand-gold"/> Prospek Karir</h3>
-          <ul className="space-y-2">
-            {careers.map((career, idx) => (
-              <li key={idx} className="flex items-start">
-                <CheckCircle size={18} className="text-green-500 mr-2 mt-0.5" />
-                <span className="text-gray-700 dark:text-gray-300">{career}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div>
-          <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center"><BookOpen className="mr-2 text-brand-gold"/> Kompetensi Lulusan</h3>
-          <ul className="space-y-2">
-            {curriculum.map((item, idx) => (
-              <li key={idx} className="flex items-start">
-                <CheckCircle size={18} className="text-brand-blue dark:text-brand-gold mr-2 mt-0.5" />
-                <span className="text-gray-700 dark:text-gray-300">{item}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-    </div>
-  </PageLayout>
-);
-
 const FasilitasPage: React.FC = () => {
-  // Enhanced Facilities with Virtual Tour Placeholder
+  // Enhanced Facilities with Virtual Tour Placeholder and Expanded List
   return (
     <PageLayout title="Fasilitas Akademik" parent="Program Studi">
       <div className="grid grid-cols-1 gap-12">
@@ -959,6 +873,20 @@ const FasilitasPage: React.FC = () => {
             img: "https://picsum.photos/id/515/800/500",
             features: ["Kamar Standar", "Ruang Makan", "Keamanan 24 Jam"]
           },
+          {
+            title: "Auditorium Utama",
+            icon: <Mic size={32} />,
+            desc: "Ruang serbaguna untuk seminar, wisuda, dan kegiatan besar lainnya. Dilengkapi dengan sistem tata suara dan pencahayaan modern.",
+            img: "https://picsum.photos/id/439/800/500",
+            features: ["Panggung Luas", "Kapasitas 1000", "LED Videotron"]
+          },
+           {
+            title: "Kantin Sehat & Student Center",
+            icon: <Coffee size={32} />,
+            desc: "Area bersantai dan bersosialisasi bagi mahasiswa. Menyediakan makanan sehat dengan harga terjangkau dan ruang untuk kegiatan organisasi mahasiswa.",
+            img: "https://picsum.photos/id/425/800/500",
+            features: ["Area Indoor/Outdoor", "Menu Higienis", "Co-working Space"]
+          }
         ].map((item, idx) => (
           <div key={idx} className="flex flex-col md:flex-row bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden border border-gray-100 dark:border-gray-700 group">
              <div className="md:w-1/2 relative h-64 md:h-auto overflow-hidden">
@@ -1000,42 +928,73 @@ const FasilitasPage: React.FC = () => {
 // 3. DOSEN SECTION
 const DosenPage: React.FC = () => {
   const [selectedLecturer, setSelectedLecturer] = useState<any>(null);
+  const [searchTerm, setSearchTerm] = useState('');
 
   const lecturers = [
-    { id: 1, name: "Dr. Arozatulo Telaumbanua, M.Th", role: "Dosen Teologi Sistematika", img: "https://i.pravatar.cc/300?img=11", s1: "STT WPJ", s2: "STT Jaffray", s3: "STT Jaffray", research: "Kristologi Kontekstual, Teologi Reformed", email: "arozatulo@sttwpj.ac.id" },
-    { id: 2, name: "Pdt. Yosua, M.Th", role: "Dosen Biblika Perjanjian Baru", img: "https://i.pravatar.cc/300?img=12", s1: "STT WPJ", s2: "STT SAAT", s3: "Sedang Studi", research: "Eksegese Surat Paulus, Bahasa Yunani", email: "yosua@sttwpj.ac.id" },
-    { id: 3, name: "Ibu Maria, M.Pd.K", role: "Dosen Pendidikan Agama Kristen", img: "https://i.pravatar.cc/300?img=5", s1: "STT WPJ", s2: "STT I3", s3: "-", research: "Psikologi Perkembangan, Kurikulum PAK", email: "maria@sttwpj.ac.id" },
-    { id: 4, name: "Pdt. Markus, M.Th", role: "Dosen Misiologi", img: "https://i.pravatar.cc/300?img=14", s1: "STT WPJ", s2: "STT Jaffray", s3: "-", research: "Misi Holistik, Antropologi Budaya", email: "markus@sttwpj.ac.id" },
-    { id: 5, name: "Dr. Sarah, M.Th", role: "Dosen Konseling Pastoral", img: "https://i.pravatar.cc/300?img=9", s1: "STT Aletheia", s2: "STT SAAT", s3: "Fuller Seminary", research: "Konseling Keluarga, Trauma Healing", email: "sarah@sttwpj.ac.id" },
-    { id: 6, name: "Bpk. Yohanes, M.Pd", role: "Dosen Manajemen Pendidikan", img: "https://i.pravatar.cc/300?img=8", s1: "Uncen", s2: "UPI Bandung", s3: "-", research: "Manajemen Sekolah, Kepemimpinan", email: "yohanes@sttwpj.ac.id" },
+    { id: 1, name: "Pdt. Ardi Asso, S. Th, M. Pd. K", role: "Ketua Sekolah / Dosen", img: "https://ui-avatars.com/api/?name=Ardi+Asso&background=random", s1: "STT WPJ", s2: "-", s3: "-", research: "Teologi & Pendidikan", email: "ardi.asso@sttwpj.ac.id" },
+    { id: 2, name: "Pdt. Daud Auwe, M. Th", role: "Puket I (Akademik)", img: "https://ui-avatars.com/api/?name=Daud+Auwe&background=random", s1: "-", s2: "M. Th", s3: "-", research: "Teologi", email: "daud.auwe@sttwpj.ac.id" },
+    { id: 3, name: "Pdt. Dr. Benny Giay, Ph. D", role: "Puket II (Keuangan)", img: "https://ui-avatars.com/api/?name=Benny+Giay&background=random", s1: "-", s2: "-", s3: "Ph. D", research: "Sejarah Gereja & Antropologi", email: "benny.giay@sttwpj.ac.id" },
+    { id: 4, name: "Pdt. Dominggus Pigay, M. Th", role: "Puket III (Kemahasiswaan)", img: "https://ui-avatars.com/api/?name=Dominggus+Pigay&background=random", s1: "-", s2: "M. Th", s3: "-", research: "Teologi Praktika", email: "dominggus.pigay@sttwpj.ac.id" },
+    { id: 5, name: "Pdt. Naftali Takimai, M. Th", role: "Kaprodi Teologi", img: "https://ui-avatars.com/api/?name=Naftali+Takimai&background=random", s1: "-", s2: "M. Th", s3: "-", research: "Teologi", email: "naftali.takimai@sttwpj.ac.id" },
+    { id: 6, name: "Pdt. Henny Ohoitimur, M. Pd. K", role: "Kaprodi PAK", img: "https://ui-avatars.com/api/?name=Henny+Ohoitimur&background=random", s1: "-", s2: "M. Pd. K", s3: "-", research: "Pendidikan Agama Kristen", email: "henny.ohoitimur@sttwpj.ac.id" },
+    { id: 7, name: "Pdt. Rosa Pigai, M. Pd. K", role: "Dosen / Pengurus Asrama", img: "https://ui-avatars.com/api/?name=Rosa+Pigai&background=random", s1: "-", s2: "M. Pd. K", s3: "-", research: "Pendidikan Kristen", email: "rosa.pigai@sttwpj.ac.id" },
+    { id: 8, name: "Pdt. Andris Monim, M. Pd. K", role: "Dosen", img: "https://ui-avatars.com/api/?name=Andris+Monim&background=random", s1: "-", s2: "M. Pd. K", s3: "-", research: "Pendidikan Agama Kristen", email: "andris.monim@sttwpj.ac.id" },
+    { id: 9, name: "Pdt. Yusak Pekei, M. Th", role: "Dosen", img: "https://ui-avatars.com/api/?name=Yusak+Pekei&background=random", s1: "-", s2: "M. Th", s3: "-", research: "Teologi", email: "yusak.pekei@sttwpj.ac.id" },
+    { id: 10, name: "Pdt. Yonatan Selepole, M. Th", role: "Dosen", img: "https://ui-avatars.com/api/?name=Yonatan+Selepole&background=random", s1: "-", s2: "M. Th", s3: "-", research: "Teologi", email: "yonatan.selepole@sttwpj.ac.id" },
   ];
+
+  const filteredLecturers = lecturers.filter(lecturer => 
+    lecturer.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
+    lecturer.role.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    lecturer.research.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <PageLayout title="Dosen & Staff Pengajar" parent="Dosen">
-       <p className="text-gray-600 dark:text-gray-300 mb-8 max-w-2xl">
-         STT Walter Post Jayapura didukung oleh tenaga pengajar yang kompeten, berdedikasi, dan memiliki latar belakang pendidikan dari berbagai perguruan tinggi teologi ternama.
-       </p>
+       <div className="mb-8 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-gray-600 dark:text-gray-300 max-w-xl">
+            STT Walter Post Jayapura didukung oleh tenaga pengajar yang kompeten, berdedikasi, dan memiliki latar belakang pendidikan dari berbagai perguruan tinggi teologi ternama.
+          </p>
+          <div className="relative w-full md:w-72">
+             <input 
+               type="text" 
+               placeholder="Cari Dosen / Bidang Riset..." 
+               className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-brand-blue focus:border-brand-blue dark:bg-gray-700 dark:text-white"
+               value={searchTerm}
+               onChange={(e) => setSearchTerm(e.target.value)}
+             />
+             <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+          </div>
+       </div>
+
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        {lecturers.map((lecturer) => (
-          <div key={lecturer.id} className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 overflow-hidden text-center hover:-translate-y-2 transition-transform duration-300 flex flex-col">
-            <div className="w-32 h-32 mx-auto mt-8 rounded-full overflow-hidden border-4 border-white dark:border-gray-700 shadow-md relative">
-              <img src={lecturer.img} alt={lecturer.name} className="w-full h-full object-cover" />
-            </div>
-            <div className="p-6 flex-grow flex flex-col">
-              <h3 className="font-bold text-lg text-gray-900 dark:text-white mb-1">{lecturer.name}</h3>
-              <p className="text-brand-blue dark:text-brand-gold text-sm font-medium mb-4">{lecturer.role}</p>
-              
-              <div className="mt-auto">
-                 <button 
-                  onClick={() => setSelectedLecturer(lecturer)}
-                  className="text-brand-gold text-sm font-bold hover:text-brand-blue transition-colors border border-brand-gold px-4 py-2 rounded-full hover:bg-brand-gold hover:text-white w-full"
-                 >
-                   Lihat Profil Lengkap
-                 </button>
+        {filteredLecturers.length > 0 ? (
+          filteredLecturers.map((lecturer) => (
+            <div key={lecturer.id} className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 overflow-hidden text-center hover:-translate-y-2 transition-transform duration-300 flex flex-col">
+              <div className="w-32 h-32 mx-auto mt-8 rounded-full overflow-hidden border-4 border-white dark:border-gray-700 shadow-md relative">
+                <img src={lecturer.img} alt={lecturer.name} className="w-full h-full object-cover" />
+              </div>
+              <div className="p-6 flex-grow flex flex-col">
+                <h3 className="font-bold text-lg text-gray-900 dark:text-white mb-1">{lecturer.name}</h3>
+                <p className="text-brand-blue dark:text-brand-gold text-sm font-medium mb-4">{lecturer.role}</p>
+                
+                <div className="mt-auto">
+                  <button 
+                    onClick={() => setSelectedLecturer(lecturer)}
+                    className="text-brand-gold text-sm font-bold hover:text-brand-blue transition-colors border border-brand-gold px-4 py-2 rounded-full hover:bg-brand-gold hover:text-white w-full"
+                  >
+                    Lihat Profil Lengkap
+                  </button>
+                </div>
               </div>
             </div>
+          ))
+        ) : (
+          <div className="col-span-3 text-center py-10 text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-800 rounded-xl border border-dashed border-gray-300 dark:border-gray-700">
+             <User size={48} className="mx-auto mb-2 opacity-50" />
+             <p>Tidak ada dosen yang cocok dengan pencarian "{searchTerm}"</p>
           </div>
-        ))}
+        )}
       </div>
 
       {/* Lecturer Detail Modal */}
@@ -1081,40 +1040,138 @@ const DosenPage: React.FC = () => {
   );
 };
 
-// 4. LAYANAN SECTION
+// --- Missing Components Implementation ---
+
+interface ProdiDetailProps {
+  title: string;
+  degree: string;
+  description: string;
+  vision?: string;
+  careers: string[];
+  curriculum: string[];
+  featuredCourses: string[];
+}
+
+const ProdiDetail: React.FC<ProdiDetailProps> = ({ title, degree, description, vision, careers, curriculum, featuredCourses }) => {
+  return (
+    <PageLayout title={title} parent="Program Studi">
+      <div className="space-y-8">
+        <div>
+          <h3 className="text-2xl font-bold text-brand-blue dark:text-brand-gold mb-2">Gelar: {degree}</h3>
+          <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-lg">{description}</p>
+        </div>
+
+        {vision && (
+          <div className="bg-blue-50 dark:bg-gray-800 border-l-4 border-brand-blue p-6 rounded-r-lg">
+            <h4 className="font-bold text-gray-900 dark:text-white mb-2">Visi Program Studi</h4>
+            <p className="italic text-gray-600 dark:text-gray-400">"{vision}"</p>
+          </div>
+        )}
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div>
+            <h4 className="font-bold text-xl text-gray-900 dark:text-white mb-4 flex items-center"><BriefcaseIcon className="mr-2" size={20}/> Prospek Karir</h4>
+            <ul className="space-y-2">
+              {careers.map((career, idx) => (
+                <li key={idx} className="flex items-start">
+                  <CheckCircle size={16} className="text-green-500 mr-2 mt-1 shrink-0" />
+                  <span className="text-gray-700 dark:text-gray-300">{career}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="font-bold text-xl text-gray-900 dark:text-white mb-4 flex items-center"><BookOpen className="mr-2" size={20}/> Kurikulum Inti</h4>
+            <ul className="space-y-2">
+              {curriculum.map((subject, idx) => (
+                <li key={idx} className="flex items-start">
+                  <div className="w-1.5 h-1.5 bg-brand-gold rounded-full mr-3 mt-2"></div>
+                  <span className="text-gray-700 dark:text-gray-300">{subject}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+        
+        <div>
+           <h4 className="font-bold text-xl text-gray-900 dark:text-white mb-4">Mata Kuliah Unggulan</h4>
+           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {featuredCourses.map((course, idx) => (
+                 <div key={idx} className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg border border-gray-100 dark:border-gray-600">
+                    <span className="text-brand-blue dark:text-brand-gold font-bold">{course}</span>
+                 </div>
+              ))}
+           </div>
+        </div>
+      </div>
+    </PageLayout>
+  );
+};
+
+// Simple Icon component for reuse
+const BriefcaseIcon = ({ className, size }: { className?: string, size?: number }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+);
+
+const TracerStudyPage: React.FC = () => (
+  <PageLayout title="Tracer Study" parent="Alumni">
+    <div className="max-w-3xl mx-auto text-center">
+      <p className="text-lg text-gray-600 dark:text-gray-300 mb-8">
+        Kami mengundang seluruh alumni STT Walter Post Jayapura untuk berpartisipasi dalam survei penelusuran alumni (Tracer Study). Data Anda sangat berharga bagi pengembangan mutu pendidikan kami.
+      </p>
+      <div className="bg-brand-light dark:bg-gray-800 p-8 rounded-xl border border-brand-gold/20 mb-8">
+        <h3 className="text-xl font-bold mb-4">Formulir Tracer Study Online</h3>
+        <p className="mb-6 text-sm">Silakan klik tombol di bawah untuk mengisi kuesioner.</p>
+        <button className="bg-brand-blue text-white px-8 py-3 rounded-lg font-bold hover:bg-blue-800 transition-colors">
+          Isi Kuesioner Sekarang
+        </button>
+      </div>
+    </div>
+  </PageLayout>
+);
+
 const PMBPage: React.FC = () => (
   <PageLayout title="Pendaftaran Mahasiswa Baru" parent="Layanan">
-    <div className="space-y-8">
-      <div className="bg-brand-blue text-white p-8 rounded-2xl text-center relative overflow-hidden">
-        <div className="relative z-10">
-          <h2 className="text-3xl font-bold mb-4">Bergabunglah Bersama Kami</h2>
-          <p className="text-blue-100 mb-8 max-w-2xl mx-auto">Mari persiapkan diri Anda menjadi hamba Tuhan yang berkualitas dan berkarakter Kristus di STT Walter Post Jayapura.</p>
-          <button className="bg-brand-gold hover:bg-amber-600 text-white font-bold py-3 px-8 rounded-full shadow-lg transition-transform transform hover:scale-105">
-            Daftar Online Sekarang
-          </button>
-        </div>
-        {/* Decorative circle */}
-        <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -mr-16 -mt-16 blur-3xl"></div>
-      </div>
-
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
       <div>
-        <h3 className="text-xl font-bold text-gray-800 dark:text-white mb-6 text-center">Alur Pendaftaran</h3>
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          {[
-            { step: "1", title: "Isi Formulir", desc: "Lengkapi data diri secara online.", icon: <FileText size={24} /> },
-            { step: "2", title: "Pembayaran", desc: "Transfer biaya pendaftaran.", icon: <CreditCard size={24} /> },
-            { step: "3", title: "Ujian Masuk", desc: "Mengikuti tes tertulis & wawancara.", icon: <PenTool size={24} /> },
-            { step: "4", title: "Daftar Ulang", desc: "Registrasi ulang sebagai mahasiswa.", icon: <CheckCircle size={24} /> }
-          ].map((item) => (
-            <div key={item.step} className="bg-white dark:bg-gray-800 p-6 rounded-xl border border-gray-200 dark:border-gray-700 text-center relative hover:shadow-lg transition-shadow">
-              <div className="w-12 h-12 bg-brand-light dark:bg-gray-700 text-brand-blue dark:text-brand-gold rounded-full flex items-center justify-center font-bold text-xl mx-auto mb-4 border-2 border-brand-blue/20 dark:border-gray-600">
-                {item.icon}
-              </div>
-              <h4 className="font-bold text-gray-900 dark:text-white mb-2">{item.title}</h4>
-              <p className="text-sm text-gray-500 dark:text-gray-400">{item.desc}</p>
+         <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Jadwal Pendaftaran</h3>
+         <div className="space-y-4">
+            <div className="border-l-4 border-green-500 pl-4 py-2 bg-green-50 dark:bg-green-900/10">
+               <h4 className="font-bold text-green-700 dark:text-green-400">Gelombang I</h4>
+               <p className="text-sm">1 Mei - 30 Juni 2024</p>
             </div>
-          ))}
-        </div>
+            <div className="border-l-4 border-brand-gold pl-4 py-2 bg-amber-50 dark:bg-amber-900/10">
+               <h4 className="font-bold text-amber-700 dark:text-amber-400">Gelombang II</h4>
+               <p className="text-sm">1 Juli - 31 Agustus 2024</p>
+            </div>
+         </div>
+         
+         <h3 className="text-2xl font-bold text-gray-900 dark:text-white mt-8 mb-4">Syarat Pendaftaran</h3>
+         <ul className="list-disc pl-5 space-y-2 text-gray-600 dark:text-gray-300">
+            <li>Fotokopi Ijazah SMA/SMK dilegalisir (3 lembar)</li>
+            <li>Fotokopi KTP & Kartu Keluarga</li>
+            <li>Pas foto berwarna 3x4 (4 lembar)</li>
+            <li>Surat rekomendasi gereja asal</li>
+            <li>Surat keterangan sehat</li>
+         </ul>
+      </div>
+      
+      <div className="bg-white dark:bg-gray-800 shadow-xl rounded-2xl p-8 border border-gray-100 dark:border-gray-700">
+         <h3 className="text-xl font-bold text-center mb-6">Formulir Pendaftaran Online</h3>
+         <form className="space-y-4">
+            <input type="text" placeholder="Nama Lengkap" className="w-full p-3 border rounded-lg dark:bg-gray-700 dark:text-white dark:border-gray-600" />
+            <input type="email" placeholder="Email Aktif" className="w-full p-3 border rounded-lg dark:bg-gray-700 dark:text-white dark:border-gray-600" />
+            <input type="tel" placeholder="Nomor WhatsApp" className="w-full p-3 border rounded-lg dark:bg-gray-700 dark:text-white dark:border-gray-600" />
+            <select className="w-full p-3 border rounded-lg dark:bg-gray-700 dark:text-white dark:border-gray-600">
+               <option value="">Pilih Program Studi</option>
+               <option value="S1 Teologi">S1 Teologi</option>
+               <option value="S1 PAK">S1 PAK</option>
+            </select>
+            <button className="w-full bg-brand-gold text-white font-bold py-3 rounded-lg hover:bg-amber-600 transition-colors">
+               Daftar Sekarang
+            </button>
+         </form>
       </div>
     </div>
   </PageLayout>
@@ -1122,266 +1179,105 @@ const PMBPage: React.FC = () => (
 
 const ELibraryPage: React.FC = () => (
   <PageLayout title="E-Library" parent="Layanan">
-    <div className="text-center space-y-8 py-10">
-       <Library size={80} className="mx-auto text-brand-blue/20 dark:text-brand-gold/20" />
-       <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Perpustakaan Digital</h2>
-       <p className="max-w-2xl mx-auto text-gray-600 dark:text-gray-300">
-         Akses ribuan koleksi buku digital, jurnal teologi, dan referensi akademik untuk menunjang studi Anda. Tersedia 24/7 bagi seluruh civitas akademika STT Walter Post Jayapura.
-       </p>
-       
-       <button className="bg-brand-blue hover:bg-blue-800 text-white font-bold py-4 px-10 rounded-full text-lg shadow-xl transition-transform transform hover:scale-105 flex items-center justify-center mx-auto">
-          <ExternalLink className="mr-3" size={24} />
-          Akses E-Library Sekarang
-       </button>
-       
-       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto text-left mt-12">
-          <div className="p-6 border dark:border-gray-700 rounded-xl hover:border-brand-gold transition-colors">
-            <h4 className="font-bold text-lg mb-2 text-brand-blue dark:text-brand-gold">E-Books</h4>
-            <p className="text-sm text-gray-500 dark:text-gray-400">Koleksi buku teologi, pendidikan, dan umum dalam format digital.</p>
-          </div>
-          <div className="p-6 border dark:border-gray-700 rounded-xl hover:border-brand-gold transition-colors">
-            <h4 className="font-bold text-lg mb-2 text-brand-blue dark:text-brand-gold">Jurnal Ilmiah</h4>
-            <p className="text-sm text-gray-500 dark:text-gray-400">Akses ke jurnal nasional terakreditasi dan internasional bereputasi.</p>
-          </div>
-          <div className="p-6 border dark:border-gray-700 rounded-xl hover:border-brand-gold transition-colors">
-            <h4 className="font-bold text-lg mb-2 text-brand-blue dark:text-brand-gold">Skripsi & Tesis</h4>
-            <p className="text-sm text-gray-500 dark:text-gray-400">Repositori hasil penelitian mahasiswa dan dosen STT WPJ.</p>
-          </div>
-       </div>
-    </div>
+     <div className="text-center py-10">
+        <Library size={64} className="mx-auto text-brand-blue mb-4" />
+        <h2 className="text-2xl font-bold mb-4">Perpustakaan Digital</h2>
+        <p className="text-gray-600 dark:text-gray-300 mb-8">Akses ribuan koleksi buku digital, jurnal, dan referensi teologi.</p>
+        <div className="flex justify-center gap-4">
+           <button className="bg-brand-blue text-white px-6 py-3 rounded-lg font-bold flex items-center">
+              <Search className="mr-2" size={18}/> Cari Katalog
+           </button>
+           <button className="border border-brand-blue text-brand-blue dark:text-white px-6 py-3 rounded-lg font-bold flex items-center">
+              <User className="mr-2" size={18}/> Login Anggota
+           </button>
+        </div>
+     </div>
   </PageLayout>
 );
 
-// 5. BERITA & AGENDA SECTION
-const AgendaPage: React.FC = () => {
-  const [filter, setFilter] = useState('Semua');
-  const filters = ["Semua", "Akademik", "Seminar", "Kegiatan Mahasiswa"];
-
-  const events = [
-    { id: 1, date: "15", month: "AGU", title: "Kuliah Umum Semester Ganjil", time: "08:00 - 12:00 WIT", loc: "Aula Kampus", cat: "Akademik" },
-    { id: 2, date: "20", month: "AGU", title: "Seminar Nasional Teologi", time: "09:00 - 15:00 WIT", loc: "Zoom & Youtube", cat: "Seminar" },
-    { id: 3, date: "01", month: "SEP", title: "Retret Mahasiswa Baru", time: "3 Hari", loc: "Kampung Harapan", cat: "Kegiatan Mahasiswa" },
-    { id: 4, date: "10", month: "SEP", title: "Batas Akhir KRS", time: "23:59 WIT", loc: "Online (SiAkad)", cat: "Akademik" },
-  ];
-
-  const filteredEvents = filter === "Semua" ? events : events.filter(e => e.cat === filter);
-
-  return (
-    <PageLayout title="Kalender & Agenda" parent="Berita">
-       <div className="flex flex-wrap gap-2 mb-8">
-         <span className="flex items-center text-gray-500 dark:text-gray-400 mr-2"><Filter size={16} className="mr-1"/> Filter:</span>
-         {filters.map(f => (
-            <button 
-              key={f}
-              onClick={() => setFilter(f)}
-              className={`px-4 py-1 rounded-full text-sm font-medium transition-colors border ${filter === f ? 'bg-brand-blue text-white border-brand-blue' : 'bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 border-gray-200 dark:border-gray-600 hover:border-brand-blue'}`}
-            >
-              {f}
-            </button>
-         ))}
-       </div>
-
-       <div className="space-y-4">
-         {filteredEvents.map(event => (
-           <div key={event.id} className="flex flex-col md:flex-row bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow group">
-              <div className="flex-shrink-0 flex flex-col items-center justify-center bg-brand-light dark:bg-gray-700 w-20 h-20 rounded-lg text-brand-blue dark:text-brand-gold mb-4 md:mb-0 md:mr-6 group-hover:bg-brand-blue group-hover:text-white transition-colors">
-                 <span className="text-2xl font-bold leading-none">{event.date}</span>
-                 <span className="text-xs font-bold uppercase mt-1">{event.month}</span>
-              </div>
-              <div className="flex-grow">
-                 <div className="flex items-center space-x-2 mb-2">
-                    <span className="text-xs font-bold px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded text-gray-600 dark:text-gray-300">{event.cat}</span>
-                 </div>
-                 <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2 group-hover:text-brand-blue dark:group-hover:text-brand-gold transition-colors">{event.title}</h3>
-                 <div className="flex items-center text-sm text-gray-500 dark:text-gray-400 space-x-4">
-                    <span className="flex items-center"><Clock size={14} className="mr-1"/> {event.time}</span>
-                    <span className="flex items-center"><MapPin size={14} className="mr-1"/> {event.loc}</span>
-                 </div>
-              </div>
-              <div className="flex items-center justify-center md:justify-end mt-4 md:mt-0">
-                 <button className="text-brand-blue dark:text-brand-gold hover:text-brand-gold font-bold text-sm">Detail</button>
+const NewsPage: React.FC = () => (
+  <PageLayout title="Berita & Artikel" parent="Berita">
+     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {[1, 2, 3, 4].map((item) => (
+           <div key={item} className="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-sm border border-gray-100 dark:border-gray-700">
+              <img src={`https://picsum.photos/600/400?random=${item + 30}`} alt="News" className="w-full h-48 object-cover"/>
+              <div className="p-6">
+                 <div className="text-xs text-gray-500 mb-2">2{item} Agustus 2024</div>
+                 <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-white">Judul Berita Kampus {item}</h3>
+                 <p className="text-gray-600 dark:text-gray-400 mb-4 line-clamp-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                 <Link to="#" className="text-brand-blue font-bold text-sm hover:underline">Baca Selengkapnya</Link>
               </div>
            </div>
-         ))}
-       </div>
-    </PageLayout>
-  );
-};
+        ))}
+     </div>
+  </PageLayout>
+);
 
-const NewsPage: React.FC = () => {
-  const [filter, setFilter] = useState('Semua');
-  const categories = ['Semua', 'Akademik', 'Kegiatan', 'Pengumuman'];
-
-  const newsItems = [
-    { id: 1, title: "Penerimaan Mahasiswa Baru TA 2024/2025", category: "Pengumuman", date: "12 Ags 2024", img: "https://picsum.photos/id/10/800/600" },
-    { id: 2, title: "Seminar Teologi Kebangsaan", category: "Kegiatan", date: "05 Ags 2024", img: "https://picsum.photos/id/20/800/600" },
-    { id: 3, title: "Jadwal Ujian Akhir Semester Genap", category: "Akademik", date: "28 Jul 2024", img: "https://picsum.photos/id/3/800/600" },
-    { id: 4, title: "Ibadah Pembukaan Semester", category: "Kegiatan", date: "15 Jul 2024", img: "https://picsum.photos/id/4/800/600" },
-  ];
-
-  const filteredNews = filter === 'Semua' ? newsItems : newsItems.filter(n => n.category === filter);
-
-  return (
-    <PageLayout title="Berita & Artikel" parent="Berita">
-      {/* Filter Buttons */}
-      <div className="flex flex-col sm:flex-row items-center justify-between mb-8 pb-6 border-b border-gray-100 dark:border-gray-700">
-        <div className="flex items-center text-gray-500 dark:text-gray-400 mb-4 sm:mb-0">
-           <Filter size={18} className="mr-2"/> <span className="font-medium">Filter Berita:</span>
-        </div>
-        <div className="flex flex-wrap gap-2">
-          {categories.map(cat => (
-            <button 
-              key={cat}
-              onClick={() => setFilter(cat)}
-              className={`px-4 py-2 rounded-lg text-sm font-bold transition-all transform hover:scale-105 ${
-                filter === cat 
-                ? 'bg-brand-blue text-white shadow-md' 
-                : 'bg-white dark:bg-gray-700 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-600 hover:border-brand-blue hover:text-brand-blue'
-              }`}
-            >
-              {cat}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {filteredNews.length > 0 ? (
-          filteredNews.map((item) => (
-            <div key={item.id} className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden hover:shadow-md transition-shadow group">
-              <div className="h-48 overflow-hidden relative">
-                <img src={item.img} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-brand-blue shadow-sm">
-                  {item.category}
-                </div>
+const AgendaPage: React.FC = () => (
+  <PageLayout title="Agenda Kampus" parent="Berita">
+     <div className="space-y-4">
+        {[
+           { date: "10 Sep", title: "Kuliah Umum Teologi", time: "09:00 WIT", loc: "Aula Utama" },
+           { date: "15 Sep", title: "Ibadah Syukur Awal Semester", time: "16:00 WIT", loc: "Kapel Kampus" },
+           { date: "20 Sep", title: "Seminar Pendidikan Kristen", time: "08:00 WIT", loc: "R. Sidang" },
+        ].map((agenda, i) => (
+           <div key={i} className="flex items-center bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border-l-4 border-brand-gold">
+              <div className="bg-gray-100 dark:bg-gray-700 p-3 rounded text-center min-w-[80px] mr-4">
+                 <div className="text-xl font-bold text-gray-900 dark:text-white">{agenda.date.split(' ')[0]}</div>
+                 <div className="text-xs uppercase">{agenda.date.split(' ')[1]}</div>
               </div>
-              <div className="p-6">
-                <div className="flex items-center text-xs text-gray-500 dark:text-gray-400 mb-3">
-                  <Calendar size={14} className="mr-1" /> {item.date}
-                </div>
-                <h3 className="font-bold text-xl mb-3 text-gray-900 dark:text-white leading-tight group-hover:text-brand-blue dark:group-hover:text-brand-gold transition-colors">
-                  <Link to="#">{item.title}</Link>
-                </h3>
-                <p className="text-gray-600 dark:text-gray-400 text-sm mb-4 line-clamp-2">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore...
-                </p>
-                <Link to="#" className="text-brand-gold font-bold text-sm hover:underline flex items-center">
-                   Baca Selengkapnya <ArrowRight size={14} className="ml-1" />
-                </Link>
+              <div>
+                 <h4 className="font-bold text-lg text-gray-900 dark:text-white">{agenda.title}</h4>
+                 <div className="flex text-sm text-gray-500 dark:text-gray-400 space-x-4 mt-1">
+                    <span className="flex items-center"><Clock size={14} className="mr-1"/> {agenda.time}</span>
+                    <span className="flex items-center"><MapPin size={14} className="mr-1"/> {agenda.loc}</span>
+                 </div>
               </div>
-            </div>
-          ))
-        ) : (
-          <div className="col-span-2 text-center py-12 bg-gray-50 dark:bg-gray-800 rounded-lg text-gray-500 dark:text-gray-400">
-            Tidak ada berita ditemukan untuk kategori ini.
-          </div>
-        )}
-      </div>
-    </PageLayout>
-  );
-};
-
-const TracerStudyPage: React.FC = () => (
-  <PageLayout title="Tracer Study Alumni" parent="Mahasiswa">
-    <div className="max-w-2xl mx-auto">
-      <div className="text-center mb-8">
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Formulir Pelacakan Alumni</h2>
-        <p className="text-gray-600 dark:text-gray-300">Mohon partisipasi alumni untuk mengisi data demi pengembangan institusi.</p>
-      </div>
-      
-      <form className="space-y-6 bg-white dark:bg-gray-800 p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm" onSubmit={(e) => e.preventDefault()}>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Nama Lengkap</label>
-            <input type="text" className="w-full border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:border-brand-blue focus:ring focus:ring-brand-blue/20 p-2.5 border transition-colors dark:bg-gray-700 dark:text-white" placeholder="Nama beserta gelar" required />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Tahun Lulus</label>
-            <input type="number" className="w-full border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:border-brand-blue focus:ring focus:ring-brand-blue/20 p-2.5 border transition-colors dark:bg-gray-700 dark:text-white" placeholder="Contoh: 2020" required />
-          </div>
-        </div>
-        
-        <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Program Studi</label>
-          <select className="w-full border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:border-brand-blue focus:ring focus:ring-brand-blue/20 p-2.5 border bg-white dark:bg-gray-700 dark:text-white transition-colors">
-            <option>S1 Teologi</option>
-            <option>S1 Pendidikan Agama Kristen</option>
-            <option>S2 Magister Teologi</option>
-            <option>S2 Magister PAK</option>
-          </select>
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Pekerjaan Saat Ini</label>
-          <input type="text" className="w-full border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:border-brand-blue focus:ring focus:ring-brand-blue/20 p-2.5 border transition-colors dark:bg-gray-700 dark:text-white" placeholder="Jabatan & Institusi (Mis: Guru Agama di SMA N 1 Sentani)" required />
-        </div>
-
-        <div>
-           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Testimoni Singkat</label>
-           <textarea rows={4} className="w-full border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:border-brand-blue focus:ring focus:ring-brand-blue/20 p-2.5 border transition-colors dark:bg-gray-700 dark:text-white" placeholder="Bagikan pengalaman belajar Anda selama di STT Walter Post..."></textarea>
-        </div>
-
-        <button type="submit" className="w-full bg-brand-blue text-white font-bold py-3 rounded-lg hover:bg-blue-800 transition-colors shadow-lg transform active:scale-95">
-          Kirim Data Alumni
-        </button>
-      </form>
-    </div>
+           </div>
+        ))}
+     </div>
   </PageLayout>
 );
 
 const SearchPage: React.FC = () => {
   const [searchParams] = useSearchParams();
   const query = searchParams.get('q') || '';
-  
-  // Mock results
-  const results = [
-    { title: `Informasi Pendaftaran tentang "${query}"`, desc: "Halaman informasi lengkap mengenai pendaftaran mahasiswa baru tahun ajaran 2024/2025.", link: "/layanan/pmb" },
-    { title: `Artikel Akademik: Relevansi "${query}"`, desc: "Jurnal teologi membahas tentang implementasi nilai-nilai kristiani dalam konteks modern.", link: "/berita/artikel" },
-    { title: `Kurikulum Program Studi`, desc: "Daftar mata kuliah yang berkaitan dengan pengembangan karakter dan kompetensi.", link: "/prodi/s1-teologi" },
-  ];
 
   return (
-    <PageLayout title="Hasil Pencarian" parent="Search">
-       <div className="space-y-6">
-         <div className="flex items-center justify-between border-b pb-4">
-            <p className="text-gray-600 dark:text-gray-300">Menampilkan hasil pencarian untuk: <span className="font-bold text-gray-900 dark:text-white text-lg">"{query}"</span></p>
-            <span className="text-sm bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded-full text-gray-500 dark:text-gray-300">{results.length} hasil ditemukan</span>
-         </div>
-         
-         {query ? (
-           <div className="space-y-4">
-             {results.map((res, idx) => (
-               <div key={idx} className="p-6 bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-xl shadow-sm hover:shadow-md transition-all hover:border-brand-blue/30 group">
-                  <h3 className="text-xl font-bold text-brand-blue dark:text-brand-gold mb-2 group-hover:text-brand-gold dark:group-hover:text-white transition-colors">
-                    <Link to={res.link} className="hover:underline">{res.title}</Link>
-                  </h3>
-                  <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 leading-relaxed">{res.desc}</p>
-                  <Link to={res.link} className="text-xs font-bold uppercase tracking-wider text-brand-blue dark:text-brand-gold flex items-center group-hover:translate-x-1 transition-transform">
-                    Lihat Halaman <ArrowRight size={12} className="ml-1" />
-                  </Link>
-               </div>
-             ))}
-           </div>
-         ) : (
-           <div className="text-center py-16 bg-gray-50 dark:bg-gray-800 rounded-xl border border-dashed border-gray-300 dark:border-gray-600">
-             <Search size={48} className="mx-auto text-gray-300 mb-4" />
-             <p className="text-gray-500 font-medium">Silakan masukkan kata kunci pencarian pada kolom di atas.</p>
-           </div>
-         )}
-       </div>
+    <PageLayout title={`Hasil Pencarian: "${query}"`} parent="Pencarian">
+      <div className="py-8">
+        {query ? (
+          <div className="text-center text-gray-600 dark:text-gray-400">
+            <p>Menampilkan hasil pencarian untuk <strong>{query}</strong></p>
+            {/* Mock results */}
+            <div className="mt-8 space-y-4 text-left">
+              <div className="p-4 border-b border-gray-100 dark:border-gray-700">
+                 <Link to="#" className="text-xl font-bold text-brand-blue hover:underline">Hasil Pencarian Contoh 1</Link>
+                 <p className="text-sm mt-2">Cuplikan teks yang mengandung kata kunci {query}...</p>
+              </div>
+              <div className="p-4 border-b border-gray-100 dark:border-gray-700">
+                 <Link to="#" className="text-xl font-bold text-brand-blue hover:underline">Hasil Pencarian Contoh 2</Link>
+                 <p className="text-sm mt-2">Informasi relevan lainnya mengenai {query}...</p>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <p className="text-center text-gray-500">Silakan masukkan kata kunci pencarian.</p>
+        )}
+      </div>
     </PageLayout>
   );
 };
 
-// Placeholder for other generic pages
-const GenericPage: React.FC<{ title: string; content?: string }> = ({ title, content }) => (
-  <PageLayout title={title} parent="Halaman">
-    <div className="prose max-w-none text-gray-600 dark:text-gray-300">
-      <p>{content || `Konten untuk halaman ${title} sedang dalam pengembangan. Silakan hubungi admin untuk informasi lebih lanjut.`}</p>
+const GenericPage: React.FC<{ title: string, content: string }> = ({ title, content }) => (
+  <PageLayout title={title}>
+    <div className="text-center py-20">
+      <h2 className="text-3xl font-bold mb-4">{title}</h2>
+      <p className="text-gray-600 dark:text-gray-400">{content}</p>
+      <Link to="/" className="inline-block mt-8 text-brand-blue hover:underline font-bold">Kembali ke Beranda</Link>
     </div>
   </PageLayout>
 );
-
 
 const App: React.FC = () => {
   const [showInfoPopup, setShowInfoPopup] = useState(true);

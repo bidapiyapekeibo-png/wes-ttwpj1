@@ -53,25 +53,25 @@ const Header: React.FC = () => {
       name: 'S1 Teologi (S.Th)', 
       path: '/prodi/s1-teologi',
       desc: 'Membentuk teolog kontekstual dan biblikal.',
-      icon: <Book className="text-brand-blue" />
+      icon: <Book className="w-5 h-5" />
     },
     { 
       name: 'S1 PAK (S.Pd)', 
       path: '/prodi/s1-pak',
       desc: 'Menghasilkan pendidik Kristen profesional.',
-      icon: <HeartHandshake className="text-orange-500" />
+      icon: <HeartHandshake className="w-5 h-5" />
     },
     { 
       name: 'S2 Magister Teologi', 
       path: '/prodi/s2-teologi',
       desc: 'Pendalaman teologi untuk pemimpin gereja.',
-      icon: <GraduationCap className="text-green-600" />
+      icon: <GraduationCap className="w-5 h-5" />
     },
     { 
       name: 'S2 Magister PAK', 
       path: '/prodi/s2-pak',
       desc: 'Pengembangan kepemimpinan pendidikan Kristen.',
-      icon: <School className="text-purple-600" />
+      icon: <School className="w-5 h-5" />
     },
   ];
 
@@ -348,9 +348,20 @@ const Header: React.FC = () => {
                           <Link
                             key={subItem.name}
                             to={subItem.path}
-                            className="block py-2 text-sm text-gray-600 dark:text-gray-300 hover:text-brand-blue dark:hover:text-brand-gold"
+                            className="block py-2 text-sm text-gray-600 dark:text-gray-300 hover:text-brand-blue dark:hover:text-brand-gold transition-colors"
                           >
-                            {subItem.name}
+                             {/* Mobile Mega Menu Rendering: Show icon and description if available */}
+                            {subItem.icon ? (
+                                <div className="flex items-start">
+                                    <div className="mr-3 mt-0.5 text-brand-blue dark:text-brand-gold">{subItem.icon}</div>
+                                    <div>
+                                        <div className="font-semibold">{subItem.name}</div>
+                                        {subItem.desc && <div className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">{subItem.desc}</div>}
+                                    </div>
+                                </div>
+                            ) : (
+                                subItem.name
+                            )}
                           </Link>
                         ))}
                       </div>
